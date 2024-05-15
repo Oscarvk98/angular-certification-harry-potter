@@ -58,6 +58,13 @@ export class MovieDetailComponent implements OnInit {
       });
   }
 
+  formatDuration(value: string) {
+    const duration = parseInt(value);
+    const hours = Math.floor(duration / 60);
+    const minutes = duration % 60;
+    return hours.toString() + 'h ' + minutes.toString() + 'min';
+  }
+
   onButtonClick() {
     this.router.navigate(['/movie-list']);
   }

@@ -56,6 +56,13 @@ export class MovieListComponent implements OnInit {
       });
   }
 
+  formatDuration(value: string) {
+    const duration = parseInt(value);
+    const hours = Math.floor(duration/60);
+    const minutes = duration%60;
+    return hours.toString()+'h '+minutes.toString()+'min';
+  }
+
   onTitleChange() {
     if (this.moviesForm.get('date')?.value) {
       this.moviesForm.get('date')?.reset();
