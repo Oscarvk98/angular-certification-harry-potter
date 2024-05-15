@@ -2,16 +2,18 @@
   <div class="filters">
     <span>Filters</span>
     <div class="inputs">
-      <mat-form-field>
-        <input matInput placeholder="Title" formControlName="title" type="text" (input)="onTitleChange($event)">
-      </mat-form-field>
-      <mat-form-field>
-        <input matInput placeholder="Date" type="number" (input)="onDateChange($event)">
-      </mat-form-field>
+      <form [formGroup]="moviesForm">
+        <mat-form-field>
+          <input matInput placeholder="Title" formControlName="title" type="text" (input)="onTitleChange()">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Date" formControlName="date" type="number" (input)="onDateChange()">
+        </mat-form-field>
+      </form>
     </div>
   </div>
   <div class="list">
-    @for (movie of movies; track $index) {
+    @for (movie of filteredMovies; track $index) {
       <div class="movie">
         <div class="movie-general">
           <span>{{movie.title}}</span>

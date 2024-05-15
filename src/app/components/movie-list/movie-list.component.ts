@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Movie, MovieService } from '../../services/movie-service.service';
 import { Subject, takeUntil } from 'rxjs';
 import { MatInputModule } from '@angular/material/input';
@@ -8,20 +9,30 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-movie-list',
   standalone: true,
-  imports: [MatFormFieldModule, MatInputModule],
+  imports: [MatFormFieldModule, MatInputModule, ReactiveFormsModule],
   templateUrl: './movie-list.component.html',
   styleUrl: './movie-list.component.scss',
   providers: [MovieService],
 })
 export class MovieListComponent implements OnInit {
-  constructor(private movieService: MovieService, private router: Router) {}
+  constructor(private movieService: MovieService, private router: Router, private formBuilder: FormBuilder) {}
 
   private unsubscribe$ = new Subject<void>();
 
   movies: Movie[] = [];
+  filteredMovies: Movie[] = [];
+  moviesForm!: FormGroup;
 
   ngOnInit(): void {
+    this.initForm();
     this.getMovieList();
+  }
+
+  initForm() {
+    this.moviesForm = this.formBuilder.group({
+      title: '',
+      date: ''
+    })
   }
 
   getMovieList() {
@@ -30,16 +41,40 @@ export class MovieListComponent implements OnInit {
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((movies) => {
         this.movies = movies;
+        this.filteredMovies = movies;
       });
   }
 
-  onTitleChange(value: unknown) {
-    console.log(value);
+  onTitleChange() {
+    if (this.moviesForm.get('date')?.value) {
+      this.moviesForm.get('date')?.reset();
+      this.filteredMovies = this.movies
+    }
+
+    if (!this.moviesForm.get('title')?.value) {
+      this.filteredMovies = this.movies;
+    } else {
+      this.filteredMovies = this.movies.filter((movie) =>
+        movie.title.includes(this.moviesForm.get('title')?.value)
+      );
+    }
   }
 
-  onDateChange(value: unknown) {
-    console.log('Fecha cambiada');
+  onDateChange() {
+    if (this.moviesForm.get('title')?.value) {
+      this.moviesForm.get('title')?.reset();
+      this.filteredMovies = this.movies;
+    }
+
+    if (!this.moviesForm.get('date')?.value) {
+      this.filteredMovies = this.movies;
+    } else {
+      this.filteredMovies = this.movies.filter((movie) =>
+        movie.release_date.includes(this.moviesForm.get('date')?.value)
+      );
+    }
   }
+
 
   onButtonClicked(id: string) {
     this.router.navigate(['/movie-detail']);
