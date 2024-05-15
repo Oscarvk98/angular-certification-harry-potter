@@ -1,53 +1,43 @@
 <div class="main-container">
   <button (click)="onButtonClick()">Back</button>
-  <span class="title">{{movie.title}}</span>
+  @if (showComponent) {
+  <span class="title">{{ movie.title }}</span>
   <div class="main-info">
-    <img class="poster" [src]="movie.poster" alt="Poster of the movie">
-    <span class="summary">Summary: {{movie.summary}}</span>
+    <img class="poster" [src]="movie.poster" alt="Poster of the movie" />
+    <span class="summary">Summary: {{ movie.summary }}</span>
   </div>
   <div class="table-container">
     <span class="title">Details</span>
     <table>
       <tr>
+        <td>Box Office</td>
+        <td>${{ movie.box_office }} million</td>
+      </tr>
+      <tr>
+        <td>Budget</td>
+        <td>${{ movie.budget }} million</td>
+      </tr>
+      <tr>
+        <td>Duration</td>
         <td>
-          Box Office
-        </td>
-        <td>
-          ${{movie.box_office}} million
+          {{ movie.duration }}
         </td>
       </tr>
       <tr>
+        <td>Producers</td>
         <td>
-          Budget
-        </td>
-        <td>
-          ${{movie.budget}} million
+          {{ movie.producers }}
         </td>
       </tr>
       <tr>
+        <td>Cinematographers</td>
         <td>
-          Duration
-        </td>
-        <td>
-          {{movie.duration}}
-        </td>
-      </tr>
-      <tr>
-        <td>
-          Producers
-        </td>
-        <td>
-          {{movie.producers}}
-        </td>
-      </tr>
-      <tr>
-        <td>
-          Cinematographers
-        </td>
-        <td>
-          {{movie.cinematographers}}
+          {{ movie.cinematographers }}
         </td>
       </tr>
     </table>
   </div>
+  } @else {
+  <mat-spinner />
+  }
 </div>
