@@ -1,0 +1,33 @@
+.main-container {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  .filters {
+    color: black;
+    background-color: grey;
+
+    .inputs {
+      display:flex;
+      gap: 10px;
+    }
+  }
+  .list {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    .movie {
+      border: 2px solid black;
+      .movie-general {
+        font-size:larger;
+        color: black;
+
+      }
+      .movie-data {
+        display: flex;
+        font-size: smaller;
+        color: black;
+        gap: 8px;
+      }
+    }
+  }
+}
