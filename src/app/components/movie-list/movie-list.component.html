@@ -4,10 +4,10 @@
     <div class="inputs">
       <form [formGroup]="moviesForm">
         <mat-form-field>
-          <input matInput placeholder="Title" formControlName="title" type="text" (input)="onTitleChange()">
+          <input matInput placeholder="Title" formControlName="title" type="text" (input)="filterMovie()">
         </mat-form-field>
         <mat-form-field>
-          <input matInput placeholder="Date" formControlName="date" type="number" (input)="onDateChange()">
+          <input matInput placeholder="Date" formControlName="date" type="number" (input)="filterMovie()">
         </mat-form-field>
       </form>
     </div>

@@ -63,32 +63,16 @@ export class MovieListComponent implements OnInit {
     return hours.toString()+'h '+minutes.toString()+'min';
   }
 
-  onTitleChange() {
+  filterMovie() {
     if (this.moviesForm.get('date')?.value) {
-      this.moviesForm.get('date')?.reset();
-      this.filteredMovies = this.movies;
-    }
-
-    if (!this.moviesForm.get('title')?.value) {
-      this.filteredMovies = this.movies;
-    } else {
       this.filteredMovies = this.movies.filter((movie) =>
-        movie.title.includes(this.moviesForm.get('title')?.value)
+          movie.title.includes(this.moviesForm.get('title')?.value) &&
+            movie.release_date.includes(this.moviesForm.get('date')?.value)
       );
-    }
-  }
-
-  onDateChange() {
-    if (this.moviesForm.get('title')?.value) {
-      this.moviesForm.get('title')?.reset();
-      this.filteredMovies = this.movies;
-    }
-
-    if (!this.moviesForm.get('date')?.value) {
-      this.filteredMovies = this.movies;
     } else {
-      this.filteredMovies = this.movies.filter((movie) =>
-        movie.release_date.includes(this.moviesForm.get('date')?.value)
+      this.filteredMovies = this.movies.filter(
+        (movie) =>
+          movie.title.includes(this.moviesForm.get('title')?.value)
       );
     }
   }
