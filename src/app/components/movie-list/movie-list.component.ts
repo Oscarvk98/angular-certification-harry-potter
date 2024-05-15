@@ -65,14 +65,17 @@ export class MovieListComponent implements OnInit {
 
   filterMovie() {
     if (this.moviesForm.get('date')?.value) {
-      this.filteredMovies = this.movies.filter((movie) =>
-          movie.title.includes(this.moviesForm.get('title')?.value) &&
-            movie.release_date.includes(this.moviesForm.get('date')?.value)
+      this.filteredMovies = this.movies.filter(
+        (movie) =>
+          movie.title
+            .toLowerCase()
+            .includes(this.moviesForm.get('title')?.value.toLowerCase()) &&
+          movie.release_date.includes(this.moviesForm.get('date')?.value)
       );
     } else {
       this.filteredMovies = this.movies.filter(
         (movie) =>
-          movie.title.includes(this.moviesForm.get('title')?.value)
+          movie.title.toLowerCase().includes(this.moviesForm.get('title')?.value.toLowerCase())
       );
     }
   }
